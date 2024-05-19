@@ -1,11 +1,10 @@
 import pyautogui
 from websockets.sync.client import connect
 from io import BytesIO
-from PIL import Image
 from threading import Thread
 import time
 
-SERVER_IP = "127.0.0.1"
+SERVER_IP = input("Server IP: ")
 PORT = "40002"
 
 LAST_SENT = -1

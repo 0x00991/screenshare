@@ -9,7 +9,7 @@ Clients = []
 
 images = []
 
-SCREENSHOT_INTERVAL = 2
+SCREENSHOT_INTERVAL = 2 # REFRESH INTERVAL을 따로 두고 SCREENSHOT INTERVAL초만큼 지났을 때만 SCREEN 보내기!
 UPDATE_INTERVAL = 0.2
 captsize = "1280x720"
 
@@ -27,7 +27,7 @@ async def process(ws):
                     Clients.remove(ws)
                 return
 
-        if type(data) != str:
+        if not isinstance(data, str):
             if data.startswith(b"SCREEN|"):
                 img_bytes = data[7:]
                 if len(img_bytes) > 20*2**20:
@@ -58,9 +58,9 @@ thread = Thread(target=asyncio.run, args=(main(),), daemon=True)
 thread.start()
 
 root = Tk()
-root.geometry("1280x720")
+root.geometry(captsize)
 
-img = ImageTk.PhotoImage(Image.new("RGB", (1280, 720), (0, 0, 0)))
+img = ImageTk.PhotoImage(Image.new("RGB", list(map(int, captsize.split("x"))), (0, 0, 0)))
 panel = Label(root, image=img)
 panel.pack(side="bottom", fill="both", expand="no")
 
